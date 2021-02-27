@@ -1,0 +1,84 @@
+.loginContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    flex-direction: column;
+
+    padding: 1rem 3rem;
+}
+
+.loginContainer > div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loginContainer > div h1 {
+    color: var(--white);
+    font-size: 2.25rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.loginContainer > div span {
+    max-width: 300px;
+    
+    display: flex;
+    align-items: center;
+
+    color: var(--text);
+
+    margin-bottom: 2rem;
+}
+
+.loginContainer > div > span p {
+    font-size: 1rem;
+    color: var(--text-highlight);
+
+    margin-left: 1rem;
+}
+
+.loginContainer > div form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 400px;
+}
+
+.loginContainer > div form input {
+    flex: 1;
+    height: 80px;
+    
+    background: linear-gradient(90deg, #4953B8 0%, rgba(73, 83, 184, 0.2) 100%);
+
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    
+    padding: 1rem;
+
+    font-size: 1.25rem;
+    color: var(--white);
+}
+
+.loginContainer > div form input::placeholder {
+    color: var(--text-highlight);
+}
+
+
+.loginContainer > div form button {
+    width: 80px;
+    height: 80px;
+
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background: var(--blue-dark);
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+
+    transition: background-color .2s;
+}

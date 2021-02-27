@@ -1,0 +1,18 @@
+.container, 
+.container > div {
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    background-color: var(--blue);
+    
+}
+
+.container > div {
+    background: url('/icons/Simbolo.svg') no-repeat;
+    background-position: 0 center;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
