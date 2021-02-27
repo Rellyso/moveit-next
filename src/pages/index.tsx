@@ -10,6 +10,7 @@ import { CountdownProvider } from "../contexts/CountdownContext";
 
 import styles from '../styles/pages/Home.module.css'
 import { ChallengesProvider } from "../contexts/ChallengesContext";
+import Sidebar from "../components/Sidebar";
 
 interface HomeProps {
   level: number;
@@ -33,6 +34,7 @@ export default function Home(props: HomeProps) {
         <ExperienceBar />
 
         <CountdownProvider>
+          <Sidebar />
           <section>
             <div>
               <Profile />
