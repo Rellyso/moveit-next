@@ -52,12 +52,14 @@
 }
 
 
+.sidebarContainer nav ul li a.selected,
 .sidebarContainer nav ul li:hover a {
     background-color: #eee;
     
     color: var(--blue);
 }
 
+a.selected::before,
 .sidebarContainer nav li a::before {
     content: '';
     position: absolute;
@@ -76,10 +78,9 @@
     transition: all .2s;
 }
 
-
-.sidebarContainer nav li a.active::before,
+.sidebarContainer nav ul li a.selected::before,
 .sidebarContainer nav li:hover a::before {
-    height: 90%;
-    left: -5px;
+    height: 90% !important;
+    left: -5px !important;
 }
 

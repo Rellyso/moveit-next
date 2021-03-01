@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '../components/Link'
 
 import styles from '../styles/components/Sidebar.module.css'
 
@@ -13,14 +13,14 @@ export default function Sidebar() {
       <nav>
         <ul>
           <li>
-            <Link href="/" as="home">
+            <Link href="/">
               <a>
                 <BiHomeAlt />
               </a>
             </Link>
           </li>
           <li>
-            <Link href="/" >
+            <Link href="/awards" >
               <a>
                 <FiAward />
               </a>
