@@ -20,7 +20,7 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link href="/awards" >
+            <Link href="/leaderboard" >
               <a>
                 <FiAward />
               </a>

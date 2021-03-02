@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useEffect, useState } from 'react'
+import { FormEvent, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../styles/components/LoginBox.module.css'
 import axios from 'axios'
@@ -27,7 +27,6 @@ export function LoginBox() {
 
         const res = await axios.get(`https://api.github.com/users/${user}`)
         const data = res.data
-        console.log(data)
 
         await setLogin(data)
 
