@@ -1,0 +1,77 @@
+.card {
+    background-color: var(--white);
+    padding: 1rem 0;
+
+    border-radius: 5px;
+
+    margin-bottom: 10px;
+}
+
+.card > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--title);
+
+    border-right: solid 4px var(--background);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+}
+
+.userInfo > img {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+}
+
+.userInfo > div {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: .5rem;
+}
+
+.userInfo > div p {
+    font-size: 1.25rem;
+    color: var(--title);
+
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.userInfo > div span {
+    display: flex;
+    align-items: center;
+}
+
+.userInfo > div span img {
+    width: 1rem;
+    height: 1rem;
+
+    margin-right: 5px;
+}
+
+
+.completedChallenges,
+.totalExperience {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    font-family: 'Inter', sans-serif;    
+    font-weight: 400;
+}
+
+.completedChallenges span,
+.totalExperience span {
+    color: var(--blue);
+    margin-right: 4px;
+}

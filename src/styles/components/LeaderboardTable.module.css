@@ -1,0 +1,34 @@
+.leaderboardTable {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+.cards > div {
+    display: grid;
+    grid-template-columns: 85px 1fr 150px 150px;
+    gap: 8px;
+
+    width: 100%;
+}
+
+.cards .head {
+    margin-bottom: 1.5rem;
+}
+
+.cards .head > span {
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 50%;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+
+    text-align: left;
+}
+
