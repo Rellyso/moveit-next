@@ -1,3 +1,4 @@
+import { ChallengesProvider } from '../contexts/ChallengesContext'
 import { LoginProvider } from '../contexts/LoginContext'
 import '../styles/global.css'
 
