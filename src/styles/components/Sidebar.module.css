@@ -18,7 +18,8 @@
 }
 
 
-.sidebarContainer nav {
+.sidebarContainer nav,
+.config {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,10 +30,6 @@
 
 .sidebarContainer ul {
     width: 100%;
-}
-
-.sidebarContainer nav ul li {
-
 }
 
 .sidebarContainer nav li a {
