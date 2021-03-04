@@ -21,6 +21,18 @@
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
     text-align: center;
     position: relative;
+
+    animation: level_up .6s forwards;
+}
+
+@keyframes level_up {
+    0% {
+        opacity: 0;
+        bottom: -40px;
+    } 100% {
+        opacity: 1;
+        bottom: 0px;
+    }
 }
 
 .container header {
