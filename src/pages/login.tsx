@@ -2,12 +2,8 @@ import Head from 'next/head'
 import { LoginBox } from '../components/LoginBox'
 import styles from '../styles/pages/Login.module.css'
 
-interface HomeProps {
 
-}
-
-
-export default function Login(props: HomeProps) {
+export default function Login(props) {
     return (
         <div className={styles.container}>
             <Head>

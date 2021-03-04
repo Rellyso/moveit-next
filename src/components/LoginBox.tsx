@@ -1,16 +1,19 @@
 import { FormEvent, useContext, useState } from 'react'
-import { useRouter } from 'next/router'
 import styles from '../styles/components/LoginBox.module.css'
-import axios from 'axios'
 import { LoginContext } from '../contexts/LoginContext'
 
 export function LoginBox() {
-    const { setLogin } = useContext(LoginContext)
+    const { handleLoginGithub } = useContext(LoginContext)
 
     const [isValid, setIsValid] = useState(false)
     const [user, setUser] = useState(null)
 
-    const router = useRouter()
+    function handleSubmit(event: FormEvent) {
+        event.preventDefault()
+
+        handleLoginGithub(user)
+    }
+
 
     function handleButtonValid(event) {
         event.target.value.length > 0
@@ -20,19 +23,6 @@ export function LoginBox() {
     function handleChange(event) {
         handleButtonValid(event)
         setUser(event.target.value)
-    }
-
-    async function handleLoginGithub(event: FormEvent) {
-        event.preventDefault()
-
-        const res = await axios.get(`https://api.github.com/users/${user}`)
-        const data = res.data
-
-        await setLogin(data)
-
-        axios.post('/api/login', { user: user })
-
-        router.push('/')
     }
 
     return (
@@ -45,7 +35,7 @@ export function LoginBox() {
                     <img src="/icons/github.svg" alt="Ícone github" />
                     <p>Faça Login com seu Github para começar</p>
                 </span>
-                <form action="/login" method="post" onSubmit={handleLoginGithub} >
+                <form action="/login" method="post" onSubmit={handleSubmit} >
                     <input type="text" placeholder="Digite seu username" required onChange={handleChange} />
                     <button type="submit" style={{ backgroundColor: isValid ? '#4cd62b' : '#4953b8' }}>
                         <img src="/icons/seta.svg" alt="" />
