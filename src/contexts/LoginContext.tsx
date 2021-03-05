@@ -37,11 +37,10 @@ export function LoginProvider({ children }: LoginContextProps) {
     async function handleLoginGithub(username) {
 
         const res = await axios.get(`https://api.github.com/users/${username}`)
-        // setData(res.data)
 
-        await setLogin(res.data)
+        const login = await setLogin(res.data)
 
-        axios.post('/api/login', { user: username })
+        axios.post('/api/login', { ...login })
 
         router.push('/')
     }
@@ -55,6 +54,15 @@ export function LoginProvider({ children }: LoginContextProps) {
             Cookies.set('git_user', String(user))
 
             setIsLogged(true)
+
+            return {
+                user: data.login,
+                name: data.name,
+                avatar_url: data.avatar_url,
+                level: 1,
+                completed_challenges: 0,
+                total_experience: 0,
+            }
         }
     }
 
