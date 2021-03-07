@@ -22,8 +22,8 @@ export function LoginProvider({ children }: LoginContextProps) {
     const [name, setName] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [isLogged, setIsLogged] = useState(false)
-    const [user, setUser] = useState(Cookies.get('git_user') || null)
-    // const [data, setData] = useState(null)
+    const [cachedUser, setCachedUser] = useState(Cookies.get('cached_user') || null)
+    const [data, setData] = useState(null)
 
     // verifica se o usuário está logado
     useEffect(() => {
@@ -35,12 +35,35 @@ export function LoginProvider({ children }: LoginContextProps) {
     }, [])
 
     async function handleLoginGithub(username) {
+        let res = await axios.get(`https://api.github.com/users/${username}`)
 
-        const res = await axios.get(`https://api.github.com/users/${username}`)
+        if (!cachedUser) {
+            setData(res.data)
 
-        const login = await setLogin(res.data)
+            console.log(data)
+        }
 
-        axios.post('/api/login', { ...login })
+        const login = await setLogin(data)
+
+        res = await axios.post('/api/login', { ...login })
+
+
+        const {
+            user,
+            name,
+            avatar_url,
+            level,
+            completed_challenges,
+            total_experience,
+        } = res.data.login
+
+        setCachedUser(user)
+        setName(name)
+        setAvatar(avatar_url)
+        setIsLogged(true)
+        Cookies.set('level', String(level))
+        Cookies.set('currentExperience', String(total_experience))
+        Cookies.set('challengesCompleted', String(completed_challenges))
 
         router.push('/')
     }
@@ -49,11 +72,10 @@ export function LoginProvider({ children }: LoginContextProps) {
         if (data) {
             setName(data.name)
             setAvatar(data.avatar_url)
-            setUser(data.login)
-
-            Cookies.set('git_user', String(user))
-
+            setCachedUser(data.login)
             setIsLogged(true)
+
+            Cookies.set('cached_user', String(cachedUser))
 
             return {
                 user: data.login,
