@@ -8,6 +8,7 @@ interface LoginContextData {
     avatar: string;
     setLogin: (data) => void;
     handleLoginGithub: (github_username) => void;
+    updateLogin: () => void;
 }
 
 interface LoginContextProps {
@@ -23,30 +24,35 @@ export function LoginProvider({ children }: LoginContextProps) {
     const [avatar, setAvatar] = useState(null)
     const [isLogged, setIsLogged] = useState(false)
     const [cachedUser, setCachedUser] = useState(Cookies.get('cached_user') || null)
-    const [data, setData] = useState(null)
 
     // verifica se o usuário está logado
     useEffect(() => {
-        // user ? setIsLogged(true) : setIsLogged(false)
-
-        if (!isLogged) {
+        if (!cachedUser) {
             router.push('/login')
         }
-    }, [])
 
-    async function handleLoginGithub(username) {
+        else {
+            (async () => {
+                const data = await getData(cachedUser)
+
+                setName(data.name)
+                setAvatar(data.avatar_url)
+            })()
+        }
+    }, [cachedUser])
+
+    async function getData(username) {
         let res = await axios.get(`https://api.github.com/users/${username}`)
 
-        if (!cachedUser) {
-            setData(res.data)
+        return res.data
+    }
 
-            console.log(data)
-        }
+    async function handleLoginGithub(username) {
+        let data = await axios.get(`https://api.github.com/users/${username}`)
 
-        const login = await setLogin(data)
+        const login = setLogin(data)
 
-        res = await axios.post('/api/login', { ...login })
-
+        let res = await axios.post('/api/login', { ...login })
 
         const {
             user,
@@ -64,28 +70,34 @@ export function LoginProvider({ children }: LoginContextProps) {
         Cookies.set('level', String(level))
         Cookies.set('currentExperience', String(total_experience))
         Cookies.set('challengesCompleted', String(completed_challenges))
+        Cookies.set('cached_user', String(cachedUser))
 
         router.push('/')
     }
 
     function setLogin(data) {
         if (data) {
-            setName(data.name)
-            setAvatar(data.avatar_url)
-            setCachedUser(data.login)
-            setIsLogged(true)
-
-            Cookies.set('cached_user', String(cachedUser))
-
             return {
                 user: data.login,
                 name: data.name,
                 avatar_url: data.avatar_url,
-                level: 1,
-                completed_challenges: 0,
-                total_experience: 0,
             }
         }
+    }
+
+    async function updateLogin() {
+        const level = Cookies.get('level')
+        const challengesCompleted = Cookies.get('challengesCompleted')
+        const currentExperience = Cookies.get('currentExperience')
+        const totalExperience = Cookies.get('totalExperience')
+
+        await axios.post('/api/update', {
+            user: cachedUser,
+            level,
+            challengesCompleted,
+            currentExperience,
+            totalExperience
+        })
     }
 
     return (
@@ -94,6 +106,7 @@ export function LoginProvider({ children }: LoginContextProps) {
             avatar,
             setLogin,
             handleLoginGithub,
+            updateLogin,
         }} >
             {children}
         </LoginContext.Provider>
