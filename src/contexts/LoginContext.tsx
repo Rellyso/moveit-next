@@ -27,7 +27,8 @@ export function LoginProvider({ children }: LoginContextProps) {
 
     // verifica se o usuário está logado
     useEffect(() => {
-        if (!cachedUser) {
+        console.log(cachedUser)
+        if (!cachedUser || cachedUser == null || cachedUser == "null") {
             router.push('/login')
         }
 
@@ -50,10 +51,11 @@ export function LoginProvider({ children }: LoginContextProps) {
     async function handleLoginGithub(username) {
         let data = await axios.get(`https://api.github.com/users/${username}`)
 
-        const login = setLogin(data)
+        const login = setLogin(data.data)
 
         let res = await axios.post('/api/login', { ...login })
 
+        console.log(res.data.login)
         const {
             user,
             name,
@@ -61,6 +63,7 @@ export function LoginProvider({ children }: LoginContextProps) {
             level,
             completed_challenges,
             total_experience,
+            current_experience
         } = res.data.login
 
         setCachedUser(user)
@@ -68,11 +71,12 @@ export function LoginProvider({ children }: LoginContextProps) {
         setAvatar(avatar_url)
         setIsLogged(true)
         Cookies.set('level', String(level))
-        Cookies.set('currentExperience', String(total_experience))
+        Cookies.set('currentExperience', String(current_experience))
         Cookies.set('challengesCompleted', String(completed_challenges))
-        Cookies.set('cached_user', String(cachedUser))
+        Cookies.set('cached_user', String(user))
+        Cookies.set('totalExperience', String(current_experience))
 
-        router.push('/')
+        router.push('/');
     }
 
     function setLogin(data) {
