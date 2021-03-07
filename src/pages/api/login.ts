@@ -17,8 +17,6 @@ async function connectToDatabase(uri: string) {
 
     const dbName = url.pathname.substr(1)
 
-
-
     const db = client.db(dbName)
 
     cachedDb = db
@@ -31,9 +29,6 @@ export default async (req: NowRequest, res: NowResponse) => {
         user,
         name,
         avatar_url,
-        level,
-        completed_challenges,
-        total_experience,
     } = req.body
 
     let last_login = new Date()
@@ -53,9 +48,9 @@ export default async (req: NowRequest, res: NowResponse) => {
             user,
             name,
             avatar_url,
-            level,
-            completed_challenges,
-            total_experience,
+            level: 1,
+            completed_challenges: 0,
+            total_experience: 0,
             last_login,
         })
 
@@ -74,8 +69,6 @@ export default async (req: NowRequest, res: NowResponse) => {
             user
         })
     }
-
-
 
     return res.status(201).json({ login })
 }
