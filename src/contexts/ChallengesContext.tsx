@@ -1,7 +1,8 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import Cookies from 'js-cookie'
 import challenges from '../../challenges.json'
 import { LevelUpModal } from '../components/levelUpModal';
+import { LoginContext } from "./LoginContext";
 
 interface challenge {
   type: 'body' | 'eye';
@@ -35,9 +36,13 @@ export function ChallengesProvider({
   children,
   ...rest
 }: ChallengesProviderProps) {
+
+  const { updateLogin } = useContext(LoginContext)
+
   const [level, setLevel] = useState(rest.level | 1)
   const [currentExperience, setCurrentExperience] = useState(rest.currentExperience | 0)
   const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted | 0)
+  const [totalExperience, setTotalExperience] = useState(Number(Cookies.get('totalExperience')) || 0)
 
   const [activeChallenge, setActiveChallenge] = useState(null)
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
@@ -51,7 +56,10 @@ export function ChallengesProvider({
   useEffect(() => {
     Cookies.set('level', String(level))
     Cookies.set('currentExperience', String(currentExperience))
+    Cookies.set('totalExperience', String(totalExperience))
     Cookies.set('challengesCompleted', String(challengesCompleted))
+
+    updateLogin()
   }, [level, currentExperience, challengesCompleted])
 
   function levelUp() {
@@ -90,6 +98,8 @@ export function ChallengesProvider({
     const { amount } = activeChallenge
 
     let finalExperience = currentExperience + amount
+
+    setTotalExperience(totalExperience + amount)
 
     if (finalExperience >= experienceToNextLevel) {
       finalExperience = finalExperience - experienceToNextLevel
