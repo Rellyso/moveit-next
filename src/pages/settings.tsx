@@ -4,6 +4,7 @@ import { GetServerSideProps } from 'next'
 
 import styles from '../styles/pages/Home.module.css'
 import Sidebar from "../components/Sidebar";
+import { SettingsComponent } from "../components/Settings";
 
 interface HomeProps {
     level: number;
@@ -24,8 +25,7 @@ export default function Settings(props: HomeProps) {
             </header>
 
             <section>
-                <div>
-                </div>
+                <SettingsComponent />
             </section>
         </div>
     )
