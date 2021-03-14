@@ -4,9 +4,12 @@ import styles from '../styles/components/Countdown.module.css'
 
 
 export function Countdown() {
-  const { minutes,
+  const {
+    minutes,
     seconds,
+    challengeTime,
     hasFinished,
+    time,
     isActive,
     startCountdown,
     resetCountdown } = useContext(CountdownContext)
@@ -15,7 +18,8 @@ export function Countdown() {
   // padStart adiciona 0 se não houver dois caracteres na string minutes e adiciona ao início (por isso padStart)
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('')
 
-
+  // const percentProgress = ((challengeTime - time) / challengeTime) * 100
+  const percentProgress = (time / challengeTime) * 100
 
   return (
     <div>
@@ -40,27 +44,37 @@ export function Countdown() {
           Ciclo encerrado <img src="/icons/check_circle.svg" alt="ícone ciclo encerrado" />
         </button>
       ) : (
-          <>
-            { isActive ? (
-              <button
-                type="button"
-                className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
-                onClick={resetCountdown}
-              >
-                Abandonar ciclo
-                <img src="/icons/close.svg" alt="close" />
-              </button>
-            ) : (
-                <button
-                  type="button"
-                  className={styles.countdownButton}
-                  onClick={startCountdown}
+        <>
+          { isActive ? (
+            <button
+              type="button"
+              className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
+              onClick={resetCountdown}
+            >
+              Abandonar ciclo
+              <img src="/icons/close.svg" alt="close" />
+              <div>
+                <div />
+
+                <span
+                  className={styles.progressBar}
+                  style={{ width: `${percentProgress}%` }}
                 >
-                  Iniciar um ciclo <img src="/icons/seta.svg" alt="ícone seta" />
-                </button>
-              )}
-          </>
-        )}
+
+                </span>
+              </div>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={styles.countdownButton}
+              onClick={startCountdown}
+            >
+              Iniciar um ciclo <img src="/icons/seta.svg" alt="ícone seta" />
+            </button>
+          )}
+        </>
+      )}
 
 
     </div>
